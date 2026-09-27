@@ -189,7 +189,7 @@ GLaDOS 的反自动化校验会比对「签到请求的平台」与「登录时�
 一律返回 code 4「Automated check-in detected」(改动 Chrome 版本号无影响)。
 因此这里默认给一个 macOS 桌面 Chrome UA, 并用 GLADOS_USER_AGENT 覆盖成
 你自己浏览器的 navigator.userAgent 才是最稳的做法。"""
-    DEFAULT_USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    DEFAULT_USER_AGENT = "Mozilla/5.0 (Linux; Android 16; 23117RK66C Build/BP2A.250605.031.A3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.39 Mobile Safari/537.36"
 
     """默认兑换计划"""
     DEFAULT_EXCHANGE_PLAN = "plan500"
