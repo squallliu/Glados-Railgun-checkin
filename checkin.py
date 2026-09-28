@@ -192,7 +192,7 @@ GLaDOS 的反自动化校验会比对「签到请求的平台」与「登录时�
     DEFAULT_USER_AGENT = "Mozilla/5.0 (Linux; Android 16; 23117RK66C Build/BP2A.250605.031.A3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.39 Mobile Safari/537.36"
 
     """默认兑换计划"""
-    DEFAULT_EXCHANGE_PLAN = "plan500"
+    DEFAULT_EXCHANGE_PLAN = "none"
 
     """默认是否输出详细响应"""
     DEFAULT_VERBOSE = False
@@ -714,14 +714,18 @@ class Checker:
             result.points_total = points_str
 
             # 4. 执行兑换
-            required_points = self.config.EXCHANGE_PLANS.get(self.config.exchange_plan, 500)
-            self._log(
-                cookie_idx,
-                domain,
-                LogEmoji.EXCHANGE,
-                f"开始兑换 {self.config.exchange_plan} (需要 {required_points} 积分)",
-            )
-            result.exchange = api.exchange(cookie, self.config.exchange_plan, required_points)
+            if self.config.exchange_plan in self.config.EXCHANGE_PLANS:
+                required_points = self.config.EXCHANGE_PLANS[self.config.exchange_plan]
+                self._log(
+                    cookie_idx,
+                    domain,
+                    LogEmoji.EXCHANGE,
+                    f"开始兑换 {self.config.exchange_plan} (需要 {required_points} 积分)",
+                )
+                result.exchange = api.exchange(cookie, self.config.exchange_plan, required_points)
+            else:
+                result.exchange = "未配置兑换计划，跳过自动兑换"
+                self._log(cookie_idx, domain, LogEmoji.INFO, "未配置兑换计划，跳过自动兑换", force=True)
 
         return result
 
